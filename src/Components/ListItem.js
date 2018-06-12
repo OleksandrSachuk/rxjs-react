@@ -1,5 +1,5 @@
 import React from 'react';
-import { updateTodo, deleteTodo } from './common';
+import { updateTodo, deleteTodo } from '../RxJS';
 
 const ListItem = ({ index, text, done }) => (
   <li>

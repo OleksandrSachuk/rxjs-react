@@ -5,7 +5,7 @@ import {
   currentInput,
   updateTodo,
   deleteTodo,
-} from './common';
+} from '../RxJS';
 
 import ListItem from './ListItem';
 import Button from './Button';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { createTodo } from './common';
+import { createTodo } from '../RxJS';
 
 const Button = () => (<button onClick={ () => createTodo.next() }>Add to list</button>);
 

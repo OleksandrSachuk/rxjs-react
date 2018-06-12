@@ -1,5 +1,5 @@
 import React from 'react';
-import { currentInput } from './common';
+import { currentInput } from '../RxJS';
 
 const Input = ({ inputValue }) =>
   (
