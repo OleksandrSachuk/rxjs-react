@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
-import { Subject } from 'rxjs';
-import './App.css';
 
-const createTodo = new Subject();
-const currentInput = new Subject();
-const updateTodo = new Subject();
-const deleteTodo = new Subject();
+import {
+  createTodo,
+  currentInput,
+  updateTodo,
+  deleteTodo,
+} from './common';
+
+import ListItem from './ListItem';
+import Button from './Button';
+import Input from './Input';
+import './App.css';
 
 class App extends Component {
 
@@ -28,38 +33,31 @@ class App extends Component {
     currentInput.subscribe(input => this.setState({ input }));
 
     deleteTodo.subscribe((index) => {
-      console.log(index, this.state.todos);
       this.setState({ todos: this.state.todos.filter((_, _index) => index !== _index) });
     });
 
     updateTodo.subscribe(({ index, ...obj }) => {
-      this.state.todos[index] = Object.assign({}, this.state.todos[index], obj);
-      this.setState({ todos: this.state.todos });
+      this.setState({ todos: this.state.todos, ...Object.assign({}, this.state.todos[index], obj) });
     });
   }
 
   render() {
     return (
       <div className="App-intro">
-        <input
-          type="text"
-          autoFocus
-          placeholder="Type in something to do."
-          value={ this.state.input }
-          onChange={ (e) => currentInput.next(e.target.value) }
-        />
-        <button onClick={ () => createTodo.next() }>Add to list</button>
+        <Input inputValue={ this.state.input } />
+        <Button />
         <ul>
-          { this.state.todos.map(({ text, done }, index) => {
-            return (
-              <li key={ index }>
-                <input onChange={ () => updateTodo.next({ index, done: !done }) } checked={ done } type="checkbox"
-                       value="" />
-                { done === true ? (<s>{ text }</s>) : text }
-                <button onClick={ () => deleteTodo.next(index) }>Delete</button>
-              </li>
+          { this.state.todos
+            .map(({ text, done }, index) =>
+              (
+                <ListItem key={ text }
+                          text={ text }
+                          done={ done }
+                          index={ index }
+                />
+              ),
             )
-          }) }
+          }
         </ul>
       </div>
     );
