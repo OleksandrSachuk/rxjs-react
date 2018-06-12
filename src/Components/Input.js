@@ -1,5 +1,5 @@
 import React from 'react';
-import { currentInput } from '../RxJS';
+import { createTodo, currentInput } from '../RxJS';
 
 const Input = ({ inputValue }) =>
   (
@@ -9,6 +9,7 @@ const Input = ({ inputValue }) =>
       placeholder="Type in something to do."
       value={ inputValue }
       onChange={ (e) => currentInput.next(e.target.value) }
+      onKeyPress={ (e) => e.charCode === 13 ? createTodo.next() : null }
     />
   );
 
